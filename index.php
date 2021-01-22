@@ -75,9 +75,12 @@ if (isset($_REQUEST['logout'])) {
         <!-- list section start -->
         <div class="event-list">
             <?php foreach ($allEvents as $singleEvent) { ?>
-                <a href="eventDetails.php?id=<?= $singleEvent->id?>" >
+                <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card">
                     <h2 class="event-title">
-                        <?= $singleEvent->title ?>
+                        <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
+                        <h2 class="list-card-header"><?= $singleEvent->title ?></h2>
+                        <p class="list-card-text"><?= $singleEvent->place ?></p>
+                        <p class="list-card-text"><?= $singleEvent->status ?></p>
                     </h2>
                 </a>
             <?php } ?>

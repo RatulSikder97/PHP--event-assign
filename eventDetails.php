@@ -71,7 +71,7 @@ if (isset($_REQUEST['logout'])) {
         <!-- Event  details section start -->
         <div class="event-details">
             <?php if ($singleEventInfo) { ?>
-                <img src="<?= $singleEventInfo->image ?>" alt=" <?= $singleEventInfo->title ?>">
+                <img src="<?= $singleEventInfo->image ?>" class="event-image" alt=" <?= $singleEventInfo->title ?>">
                 <h2 class="event-title"><?= $singleEventInfo->title ?></h2>
                 <p class="event-text"><?= $singleEventInfo->description ?></p>
                 <p class="event-text"><?= $singleEventInfo->place ?></p>
@@ -87,7 +87,7 @@ if (isset($_REQUEST['logout'])) {
 
     <!-- footer section start -->
     <footer>
-
+        <p>Developed by <a href="mailto:ratulsikder104@gmail.com">Ratul Sikder</a></p>
     </footer>
     <!-- footer section end -->
 

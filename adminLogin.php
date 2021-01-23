@@ -2,11 +2,17 @@
 // include config file
 require_once("config/config.php");
 
+ // prepare admin object
+ $admin = new Admin($db);
+
+// Check if admin is logged in
+if (($admin->isLoggedIn())) {
+    $admin->redirect('index.php');
+}
+
+
 // if clicked on login
 if (isset($_REQUEST['login'])) {
-
-    // prepare admin object
-    $admin = new Admin($db);
 
     //get value from form
     $admin->email = isset($_REQUEST['email']) ? $_REQUEST['email'] : die();

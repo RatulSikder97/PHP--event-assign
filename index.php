@@ -21,6 +21,8 @@ $allEvents = $eventObj->getAllEvent($_SESSION['id']);
 // delete event from event list
 if (isset($_REQUEST['delete']) && $_REQUEST['delete']) {
     $eventObj->deleteEvent($_REQUEST['id']);
+    header( "Location: index.php" );
+    
 }
 
 // logout button 

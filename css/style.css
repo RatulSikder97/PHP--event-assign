@@ -33,9 +33,11 @@ a {
 ==============================*/
 .main-container {
   max-width: 117rem;
-  min-height: 90vh;
+  min-height: 65rem;
+  height: fit-content;
   margin: 0 auto;
   padding-top: 5rem;
+  margin-bottom: 4rem;
   /* background: #00ff62; */
   position: relative;
 }
@@ -194,7 +196,8 @@ a {
 /* ================= */
 
 header {
-  height: 8rem;
+  min-height: 8rem;
+  height: fit-content;
   width: 100%;
   background-color: #fff;
   text-transform: capitalize;
@@ -231,12 +234,10 @@ header .logo:hover {
 
 /* login section */
 .form-section {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   background: #fff;
   box-shadow: 0.1rem 0rem 0.3rem #000;
-  width: 55rem;
+  width: 55%;
+  margin: 0 auto;
   height: fit-content;
   border-radius: 0.5rem;
   font-size: 1.8rem;
@@ -284,7 +285,7 @@ header .logo:hover {
   background-color: #fff;
   box-shadow: 0.1rem 0rem 0.3rem #000;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
   font-size: 1.8rem;
   text-transform: capitalize;
@@ -294,11 +295,11 @@ header .logo:hover {
   height: 10rem;
   width: 10rem;
   display: block;
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 .card-description {
   width: 70%;
-  padding-left: 3rem;
+  padding: 0.5rem;
 }
 
 .list-card .list-card-header {
@@ -350,6 +351,7 @@ p.card-status {
   padding: 1rem;
   border-radius: 0.5rem;
   margin-left: 2rem;
+  margin-right: 2rem;
 }
 .card-action a:hover {
   background-color: #fa5369;

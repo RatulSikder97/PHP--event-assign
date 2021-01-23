@@ -72,7 +72,9 @@ class Event
                   FROM 
                        events 
                   where 
-                       admin_id = :adminId";
+                       admin_id = :adminId
+                  ORDER BY
+                       `date`";
 
         // prepare query
         $stmt = $this->conn->prepare($query);

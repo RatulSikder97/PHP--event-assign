@@ -70,7 +70,7 @@ class Event
         $stmt->bindParam(":adminId", $admin_id);
 
         $stmt->execute();
-       
+
         return $stmt->fetchAll();
     }
 
@@ -82,7 +82,7 @@ class Event
 
         // prepare query
         $stmt = $this->conn->prepare($query);
-      
+
         // bind param
         $stmt->bindParam(":eventId", $eventId);
         $stmt->execute();
@@ -90,33 +90,42 @@ class Event
     }
 
     // update event status
-    function changeEventStatus(){
-         // query to insert record
+    function changeEventStatus()
+    {
+        // query to insert record
         $queryToActive = "UPDATE events SET `status`='active' WHERE Date(date) = Date(Now())";
         $queryToInactive = "UPDATE events SET `status`='inactive' WHERE Date(date) <> Date(Now())";
         // prepare query
-        $stmtToInactive = $this->conn->prepare( $queryToInactive);
+        $stmtToInactive = $this->conn->prepare($queryToInactive);
         $stmtToActive = $this->conn->prepare($queryToActive);
         $stmtToActive->execute();
         $stmtToInactive->execute();
 
-       
-        return true;
 
+        return true;
     }
 
     // delete event
-    function deleteEvent($eventId){
+    function deleteEvent($eventId)
+    {
         // query to insert record
         $query = "DELETE FROM events WHERE id = :eventId";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
-      
+
         // bind param
         $stmt->bindParam(":eventId", $eventId);
+
+        // delete image
+        $event = $this->getEvent($eventId);
+        unlink($event->image);
+        
+
         $stmt->execute();
+
+
+
         return true;
     }
-    
 }

@@ -63,7 +63,9 @@ if (isset($_REQUEST['login'])) {
             <div class="popup popup-green">
                 <h2><?= $_REQUEST['msg'] ?></h2>
             </div>
-        <?php } ?>
+        <?php }
+         unset($_REQUEST['msg']);
+        ?>
 
 
         <!-- login section start -->

@@ -24,6 +24,7 @@ $eventObj->changeEventStatus();
 // delete event from event list
 if (isset($_REQUEST['delete']) && $_REQUEST['delete']) {
     $eventObj->deleteEvent($_REQUEST['id']);
+    
 }
 
 // logout button 
@@ -91,7 +92,9 @@ if (isset($_REQUEST['logout'])) {
             <div class="popup popup-green">
                 <h2><?= $_REQUEST['msg'] ?></h2>
             </div>
-        <?php } ?>
+        <?php }
+        unset($_REQUEST['msg']);
+        ?>
 
 
         <!-- status nav start -->

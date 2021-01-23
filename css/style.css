@@ -80,6 +80,14 @@ a {
 .btn-red:hover {
   background: #f73e57;
 }
+/* batch */
+.batch {
+  background-color: #06c0ee;
+  display: inline-block;
+  width: fit-content;
+  padding: 0.2rem;
+  border-radius: 1rem;
+}
 
 /* input group */
 .input-group {
@@ -301,6 +309,14 @@ header .logo:hover {
   color: #0035ad;
 }
 
+.fa-address-book {
+  color: #00ad34;
+}
+
+.fa-file-text {
+  color: #aaa;
+}
+
 .list-card .card-status p,
 .list-card .card-status a {
   /* align-self: flex-end; */
@@ -321,6 +337,33 @@ header .logo:hover {
   padding: 0.2rem;
   border-radius: 0.5rem;
   margin-left: 2rem;
+}
+
+/* single event details */
+.event-details {
+  width: 70%;
+  margin: 0 auto;
+  height: fit-content;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  font-size: 1.8rem;
+  text-transform: capitalize;
+}
+
+.event-image {
+  height: 20rem;
+  width: 20rem;
+}
+
+.event-title {
+  font-size: 2.5rem;
+  color: #1481de;
+}
+.event-image,
+.event-title,
+.event-text {
+  margin-top: 0.5rem;
 }
 
 /* footer */

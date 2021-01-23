@@ -78,12 +78,22 @@ if (isset($_REQUEST['logout'])) {
             <?php if ($singleEventInfo) { ?>
             <img src="<?= $singleEventInfo->image ?>" class="event-image" alt=" <?= $singleEventInfo->title ?>">
             <h2 class="event-title"><?= $singleEventInfo->title ?></h2>
-            <p class="event-text"><?= $singleEventInfo->description ?></p>
-            <p class="event-text"><?= $singleEventInfo->place ?></p>
-            <p class="event-text"><?= $singleEventInfo->address ?></p>
-            <p class="event-text"><?= $singleEventInfo->status ?></p>
+            <p class="event-text">Status: <span class="batch"><?= $singleEventInfo->status ?></span></p>
+            <p class="event-text"><i class="fa fa-calendar"
+                    aria-hidden="true"></i></i>&nbsp;&nbsp;<?= $singleEventInfo->date ?></p>
+            <p class="event-text"><i class="fa fa-map-marker"
+                    aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<?= $singleEventInfo->place ?></p>
+            <p class="event-text"><i class="fa fa-address-book"
+                    aria-hidden="true"></i>&nbsp;&nbsp;<?= $singleEventInfo->address ?></p>
+            <p class="event-text"><i class="fa fa-file-text"
+                    aria-hidden="true"></i>&nbsp;&nbsp;<?= $singleEventInfo->description ?></p>
+
 
             <?php } ?>
+
+            <div class="center">
+                <a href="index.php" class="btn btn-blue" >Back</a>
+            </div>
         </div>
         <!-- Event  details section end -->
     </section>

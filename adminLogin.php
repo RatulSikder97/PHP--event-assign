@@ -104,7 +104,7 @@ if (isset($_REQUEST['login'])) {
 
     <!-- footer section start -->
     <footer>
-
+        <p>Developed by <a href="mailto:ratulsikder104@gmail.com">Ratul Sikder</a></p>
     </footer>
     <!-- footer section end -->
 

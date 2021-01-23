@@ -3,6 +3,7 @@
 class Event
 {
 
+    public $adminId;
     public $title;
     public $description;
     public $image;
@@ -21,7 +22,7 @@ class Event
     {
 
         // query to insert record
-        $query = "INSERT INTO `events`(`title`,`description`,`image`,`place`,`address`,`date`,`status`) VALUES (:title, :description, :image, :place, :address, :date, :status)";
+        $query = "INSERT INTO `events`(`admin_id`, `title`,`description`,`image`,`place`,`address`,`date`,`status`) VALUES (:adminId, :title, :description, :image, :place, :address, :date, :status)";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -38,6 +39,7 @@ class Event
 
 
         // bind values
+        $stmt->bindParam(":adminId", $this->adminId);
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":image", $this->image);
@@ -58,29 +60,31 @@ class Event
 
     // get all event of certain admin
 
-    function getAllEvent($admin_id = 0)
+    function getAllEvent($admin_id)
     {
 
         // query to insert record
-        $query = "SELECT * FROM events";
+        $query = "SELECT * FROM events where admin_id = :adminId";
         // prepare query
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":adminId", $admin_id);
+
         $stmt->execute();
        
         return $stmt->fetchAll();
     }
 
     // get single event
-    function getEvent($event_id)
+    function getEvent($eventId)
     {
         // query to insert record
-        $query = "SELECT * FROM events WHERE id = :event_id";
+        $query = "SELECT * FROM events WHERE id = :eventId";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
-
+      
         // bind param
-        $stmt->bindParam(":event_id", $event_id);
+        $stmt->bindParam(":eventId", $eventId);
         $stmt->execute();
         return $stmt->fetch();
     }

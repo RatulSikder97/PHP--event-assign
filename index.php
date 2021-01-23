@@ -6,15 +6,15 @@ require_once("config/config.php");
 // admin object
 $admin = new Admin($db);
 
-// // Check if admin is not logged in
-// if (!($admin->is_logged_in())) {
+// Check if admin is not logged in
+if (!($admin->is_logged_in())) {
 
-//     $admin->redirect('index.php');
-// }
+    $admin->redirect('adminLogin.php');
+}
 
 // get all event regrading admins
 $eventObj = new Event($db);
-$allEvents = $eventObj->getAllEvent();
+$allEvents = $eventObj->getAllEvent($_SESSION['id']);
 
 // logout button 
 if (isset($_REQUEST['logout'])) {
@@ -46,16 +46,18 @@ if (isset($_REQUEST['logout'])) {
 <body>
     <!-- header section start -->
     <header>
-        <div class="logo">
-            EVENT ASSIGNMENT
-        </div>
+        <a href="index.php" class="logo">
+            <h1 class="title">EVENT ASSIGNMENT</h1>
+        </a>
+
+        <a href="eventCreate.php" class="btn btn-blue create-event">Create A New Event</a>
         <nav>
             <ul>
                 <?php if (isset($_SESSION["name"])) { ?>
-                    <li><?= $_SESSION["name"] ?></li>
+                    <li class="admin-name"><?= $_SESSION["name"] ?></li>
                     <li>
 
-                        <a href="index.php?logout=true" class="btn">Logout</a>
+                        <a href="index.php?logout=true" class="btn btn-red">Logout</a>
 
                     </li>
                 <?php } else { ?>
@@ -70,19 +72,71 @@ if (isset($_REQUEST['logout'])) {
     </header>
     <!-- header section end -->
 
+
     <!-- main section -->
     <section class="main-container">
+        <!-- msg show -->
+
+        <?php if (isset($_REQUEST['msg'])) { ?>
+            <div class="popup popup-green">
+                <h2><?= $_REQUEST['msg'] ?></h2>
+            </div>
+        <?php } ?>
+
+
+        <!-- status nav start -->
+        <div class="status-nav">
+            <ul>
+                <li> <a href="index.php?status=true" class="<?php echo ($_REQUEST['status'] == 'true' || !isset($_REQUEST['status']))  ? 'active' : '' ?>">Actived Event</a></li>
+                <li><a href="index.php?status=false" class="<?php echo  $_REQUEST['status'] == 'false' ? 'active' : '' ?>">Inactived Event</a></li>
+
+            </ul>
+        </div>
+        <!-- status nav end -->
+
+
         <!-- list section start -->
         <div class="event-list">
             <?php foreach ($allEvents as $singleEvent) { ?>
-                <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card">
-                    <h2 class="event-title">
-                        <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
-                        <h2 class="list-card-header"><?= $singleEvent->title ?></h2>
-                        <p class="list-card-text"><?= $singleEvent->place ?></p>
-                        <p class="list-card-text"><?= $singleEvent->status ?></p>
-                    </h2>
-                </a>
+                <?php if (($_REQUEST['status'] == 'true' || !isset($_REQUEST['status'])) && $singleEvent->status == true) { ?>
+                    <div class="list-card">
+                        <div class="card-img">
+                            <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
+                        </div>
+                        <div class="card-description">
+                            <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card-header">
+                                <h3><?= $singleEvent->title ?></h3>
+                            </a>
+                            <p class="list-card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <?= $singleEvent->place ?></p>
+                            <p class="list-card-text"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                <?= $singleEvent->date ?></p>
+                        </div>
+                        <div class="card-status">
+                            <p class="list-card-text">Status: <?= $singleEvent->status ?>d</p>
+                            <a href="index.php?changeStatus=true">Change Status</a>
+                        </div>
+                    </div>
+                <?php } else if($singleEvent->status == false) { ?>
+                    <div class="list-card">
+                        <div class="card-img">
+                            <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
+                        </div>
+                        <div class="card-description">
+                            <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card-header">
+                                <h3><?= $singleEvent->title ?></h3>
+                            </a>
+                            <p class="list-card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <?= $singleEvent->place ?></p>
+                            <p class="list-card-text"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                <?= $singleEvent->date ?></p>
+                        </div>
+                        <div class="card-status">
+                            <p class="list-card-text">Status: <?= $singleEvent->status ?>d</p>
+                            <a href="index.php?changeStatus=true">Change Status</a>
+                        </div>
+                    </div>
+                <?php } ?>
             <?php } ?>
         </div>
         <!-- list section end -->

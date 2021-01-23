@@ -14,12 +14,8 @@ if (isset($_REQUEST['register'])) {
     $admin->email = $_POST['email'];
     $admin->password = md5($_POST['password']);
 
-    // create the admin
-    if ($admin->register()) {
-        header('Location: adminLogin.php');
-    } else {
-        echo "Error happend";
-    }
+    // register
+    $admin->register();
 }
 
 ?>
@@ -46,33 +42,53 @@ if (isset($_REQUEST['register'])) {
 <body>
     <!-- header section start -->
     <header>
-   
+        <a href="index.php" class="logo">
+            <h1 class="title">EVENT ASSIGNMENT</h1>
+        </a>
+
+        <nav>
+            <ul>
+                <li><a href="adminLogin.php" class="btn btn-green">Login</a></li>
+                <li><a href="adminRegister.php" class="btn btn-blue">Register</a></li>
+            </ul>
+        </nav>
     </header>
     <!-- header section end -->
 
     <!-- main section -->
     <section class="main-container">
         <!-- register section start -->
-        <div class="register-section">
+        <div class="form-section">
             <h2 class="form-title">Admin Registration</h2>
+            <div class="error">
+                <?php if (isset($_SESSION['error'])) { ?>
+                    <p class="error-msg"><?= $_SESSION['error'] ?></p>
+                <?php }
+                unset($_SESSION['error']);
+                ?>
+            </div>
             <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="login-form">
                 <div class="input-group">
                     <label for="name">Name</label>
-                    <input type="text" name="name" id="name" placeholder="Enter name">
+                    <input type="text" name="name" id="name" placeholder="Enter name" required>
                 </div>
 
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Enter Email">
+                    <input type="email" name="email" id="email" placeholder="Enter Email" required>
                 </div>
 
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter password">
+                    <input type="password" name="password" id="password" placeholder="Enter password" required>
                 </div>
 
-                <div class="input-group">
-                    <input type="submit" name="register" value="Registration">
+                <div class="help-text">
+                    Already have an account? <a href="adminLogin.php">Login</a>
+                </div>
+
+                <div class="center">
+                    <button class="btn btn-blue" type="submit" name="register">Registration</button>
                 </div>
 
 

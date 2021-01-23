@@ -9,7 +9,7 @@ $event = new Event($db);
 
 // Check if admin is not logged in
 if (!($admin->is_logged_in())) {
-    $admin->redirect('index.php');
+    $admin->redirect('.php');
 }
 
 // fetch single event
@@ -46,21 +46,26 @@ if (isset($_REQUEST['logout'])) {
 <body>
     <!-- header section start -->
     <header>
+        <a href="index.php" class="logo">
+            <h1 class="title">EVENT ASSIGNMENT</h1>
+        </a>
+        <a href="eventCreate.php" class="btn btn-blue create-event">Create A New Event</a>
         <nav>
             <ul>
                 <?php if (isset($_SESSION["name"])) { ?>
-                    <li><?= $_SESSION["name"] ?></li>
-                    <li>
-                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-                            <button name="logout">Logout</button>
-                        </form>
-                    </li>
+                <li class="admin-name"><?= $_SESSION["name"] ?></li>
+                <li>
+
+                    <a href="index.php?logout=true" class="btn btn-red">Logout</a>
+
+                </li>
                 <?php } else { ?>
-                    <li><a href="adminLogin.php">Login</a></li>
-                    <li><a href="adminRegister.php">Register</a></li>
+                <li><a href="adminLogin.php">Login</a></li>
+                <li><a href="adminRegister.php">Register</a></li>
                 <?php } ?>
 
             </ul>
+
 
         </nav>
     </header>
@@ -71,12 +76,12 @@ if (isset($_REQUEST['logout'])) {
         <!-- Event  details section start -->
         <div class="event-details">
             <?php if ($singleEventInfo) { ?>
-                <img src="<?= $singleEventInfo->image ?>" class="event-image" alt=" <?= $singleEventInfo->title ?>">
-                <h2 class="event-title"><?= $singleEventInfo->title ?></h2>
-                <p class="event-text"><?= $singleEventInfo->description ?></p>
-                <p class="event-text"><?= $singleEventInfo->place ?></p>
-                <p class="event-text"><?= $singleEventInfo->address ?></p>
-                <p class="event-text"><?= $singleEventInfo->status ?></p>
+            <img src="<?= $singleEventInfo->image ?>" class="event-image" alt=" <?= $singleEventInfo->title ?>">
+            <h2 class="event-title"><?= $singleEventInfo->title ?></h2>
+            <p class="event-text"><?= $singleEventInfo->description ?></p>
+            <p class="event-text"><?= $singleEventInfo->place ?></p>
+            <p class="event-text"><?= $singleEventInfo->address ?></p>
+            <p class="event-text"><?= $singleEventInfo->status ?></p>
 
             <?php } ?>
         </div>

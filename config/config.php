@@ -14,6 +14,8 @@ require_once("Model/Admin.php");
 $database = new Database();
 $db = $database->connect();
 
+// variables
+$msg = "";
 
 // // instantiate model
 // $admin = new Admin($db);

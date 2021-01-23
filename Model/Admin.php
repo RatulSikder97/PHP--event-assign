@@ -22,6 +22,7 @@ class Admin
     {
 
         if ($this->isAlreadyExist() || $this->checkNull()) {
+            $_SESSION['error'] = "Email is already used";
             return false;
         }
         // query to insert record
@@ -44,11 +45,16 @@ class Admin
 
         // execute query
         if ($stmt->execute()) {
-
+            
+            header('Location: adminLogin.php?msg=Registration Successful');
             return true;
+        }else{
+            $_SESSION['error'] = "Email is already used";
+            
         }
 
-        return false;
+        
+        
     }
     // login user
     function login()
@@ -70,11 +76,12 @@ class Admin
             print_r( $adminInfo);
             $_SESSION['id'] = $adminInfo->id;
             $_SESSION['name'] = $adminInfo->name;
-            
-            header('Location: index.php');
+
+           
+            header('Location: index.php?msg=Login Successful');
           }
           else{
-              echo "akdhfjksd";
+            $_SESSION['error'] = "Some errors happened. Check your input";
           }
     }
 
@@ -85,6 +92,9 @@ class Admin
         session_destroy();
         unset($_SESSION['id']);
         unset($_SESSION['name']);
+
+        
+        $this->redirect('adminLogin.php?msg=Logout Successful');
         return true;
     }
 

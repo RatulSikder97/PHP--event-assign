@@ -7,7 +7,7 @@ $admin = new Admin($db);
 
 // Check if admin is not logged in
 if (!($admin->is_logged_in())) {
-    $admin->redirect('index.php');
+    $admin->redirect('adminLogin.php');
 }
 
 // btn handle
@@ -17,6 +17,7 @@ if (isset($_REQUEST['createEvent'])) {
     $event = new Event($db);
 
     // set user property values
+    $event->adminId = $_SESSION['id'];
     $event->title = $_REQUEST['title'];
     $event->description = $_REQUEST['description'];
     //$this->image = $_REQUEST['image'];
@@ -77,21 +78,26 @@ if (isset($_REQUEST['logout'])) {
 <body>
     <!-- header section start -->
     <header>
+        <a href="index.php" class="logo">
+            <h1 class="title">EVENT ASSIGNMENT</h1>
+        </a>
+        <!-- <a href="eventCreate.php" class="btn btn-blue create-event">Create A New Event</a> -->
         <nav>
             <ul>
                 <?php if (isset($_SESSION["name"])) { ?>
-                    <li><?= $_SESSION["name"] ?></li>
-                    <li>
-                        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-                            <button name="logout">Logout</button>
-                        </form>
-                    </li>
+                <li class="admin-name"><?= $_SESSION["name"] ?></li>
+                <li>
+
+                    <a href="index.php?logout=true" class="btn btn-red">Logout</a>
+
+                </li>
                 <?php } else { ?>
-                    <li><a href="adminLogin.php">Login</a></li>
-                    <li><a href="adminRegister.php">Register</a></li>
+                <li><a href="adminLogin.php">Login</a></li>
+                <li><a href="adminRegister.php">Register</a></li>
                 <?php } ?>
 
             </ul>
+
 
         </nav>
     </header>
@@ -100,7 +106,7 @@ if (isset($_REQUEST['logout'])) {
     <!-- main section -->
     <section class="main-container">
         <!-- register section start -->
-        <div class="register-section">
+        <div class="form-section">
             <h2 class="form-title">Create New Event</h2>
             <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="submit-form" enctype="multipart/form-data">
                 <div class="input-group">
@@ -110,7 +116,10 @@ if (isset($_REQUEST['logout'])) {
 
                 <div class="input-group">
                     <label for="description">Description</label>
-                    <input type="text" name="description" id="description" placeholder="Enter description" required>
+                    <textarea type="tex" name="description" id="description" placeholder="Enter description" cols="30"
+                        rows="10" required></textarea>
+
+                    <!-- <input type="tex" name="description" id="description" placeholder="Enter description" required> -->
                 </div>
 
                 <div class="input-group">
@@ -134,14 +143,15 @@ if (isset($_REQUEST['logout'])) {
                 </div>
 
                 <div class="input-group">
+                    <label for="status">Status</label>
                     <select name="status" id="status" required>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
 
-                <div class="input-group">
-                    <button type="submit" name="createEvent">Create Event</button>
+                <div class="center">
+                    <button class="btn btn-green" type="submit" name="createEvent">Create Event</button>
                 </div>
 
 

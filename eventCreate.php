@@ -6,7 +6,7 @@ require_once("config/config.php");
 $admin = new Admin($db);
 
 // Check if admin is not logged in
-if (!($admin->is_logged_in())) {
+if (!($admin->isLoggedIn())) {
     $admin->redirect('adminLogin.php');
 }
 
@@ -118,7 +118,6 @@ if (isset($_REQUEST['logout'])) {
                     <label for="description">Description</label>
                     <textarea type="tex" name="description" id="description" placeholder="Enter description" cols="30"
                         rows="10" required></textarea>
-
                     <!-- <input type="tex" name="description" id="description" placeholder="Enter description" required> -->
                 </div>
 
@@ -153,21 +152,17 @@ if (isset($_REQUEST['logout'])) {
                 <div class="center">
                     <button class="btn btn-green" type="submit" name="createEvent">Create Event</button>
                 </div>
-
-
             </form>
         </div>
         <!-- register section end -->
     </section>
     <!-- main section end -->
 
-
     <!-- footer section start -->
     <footer>
         <p>Developed by <a href="mailto:ratulsikder104@gmail.com">Ratul Sikder</a></p>
     </footer>
     <!-- footer section end -->
-
 </body>
 
 </html>

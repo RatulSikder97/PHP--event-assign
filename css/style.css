@@ -40,6 +40,18 @@ a {
   position: relative;
 }
 
+.alert {
+  width: fit-content;
+  height: fit-content;
+  padding: 1rem;
+  text-align: center;
+  background: #fac599;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+}
+
 /* Button  */
 .btn:link,
 .btn:visited,
@@ -265,7 +277,7 @@ header .logo:hover {
 
 /* list card */
 .list-card {
-  width: 95%;
+  width: 75%;
   height: fit-content;
   margin: 1rem auto;
   border-radius: 0.5rem;
@@ -286,6 +298,7 @@ header .logo:hover {
 }
 .card-description {
   width: 70%;
+  padding-left: 3rem;
 }
 
 .list-card .list-card-header {
@@ -317,32 +330,36 @@ header .logo:hover {
   color: #aaa;
 }
 
-.list-card .card-status p,
-.list-card .card-status a {
+.card-status,
+.list-card .card-action a {
   /* align-self: flex-end; */
   font-size: 1.4rem !important;
   color: #000;
   display: inline-block;
 }
 
-.card-status p {
+p.card-status {
   padding: 0.5rem;
   border-radius: 1.5rem;
-  background-color: #00dce4;
+  background-color: #00dce4 !important;
   text-transform: uppercase;
 }
 
-.card-status a {
+.card-action a {
   background-color: #ff1938;
-  padding: 0.2rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   margin-left: 2rem;
+}
+.card-action a:hover {
+  background-color: #fa5369;
 }
 
 /* single event details */
 .event-details {
   width: 70%;
   margin: 0 auto;
+  margin-bottom: 4rem;
   height: fit-content;
   background-color: #fff;
   border-radius: 0.5rem;

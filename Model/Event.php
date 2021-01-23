@@ -22,7 +22,10 @@ class Event
     {
 
         // query to insert record
-        $query = "INSERT INTO `events`(`admin_id`, `title`,`description`,`image`,`place`,`address`,`date`,`status`) VALUES (:adminId, :title, :description, :image, :place, :address, :date, :status)";
+        $query = "INSERT INTO 
+                    `events`(`admin_id`, `title`,`description`,`image`,`place`,`address`,`date`,`status`) 
+                   VALUES 
+                    (:adminId, :title, :description, :image, :place, :address, :date, :status)";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -64,7 +67,13 @@ class Event
     {
 
         // query to insert record
-        $query = "SELECT * FROM events where admin_id = :adminId";
+        $query = "SELECT 
+                       * 
+                  FROM 
+                       events 
+                  where 
+                       admin_id = :adminId";
+
         // prepare query
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":adminId", $admin_id);
@@ -78,7 +87,12 @@ class Event
     function getEvent($eventId)
     {
         // query to insert record
-        $query = "SELECT * FROM events WHERE id = :eventId";
+        $query = "SELECT 
+                       * 
+                  FROM 
+                       events 
+                  WHERE 
+                       id = :eventId";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -89,12 +103,50 @@ class Event
         return $stmt->fetch();
     }
 
+    //changeEventStatus
+    function changeActiveStatus($eventId, $change){
+        echo $eventId, $change;
+        if($change =='true'){
+            $query = "UPDATE
+                        events 
+                      SET 
+                        `status`='active'
+                      WHERE 
+                        id = :eventId";
+        } else if($change =='false'){
+            $query = "UPDATE
+                            events 
+                        SET 
+                            `status`='inactive'
+                        WHERE 
+                            id = :eventId";
+        }
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind param
+        $stmt->bindParam(":eventId", $eventId);
+        $stmt->execute();
+
+    }
+
     // update event status
-    function changeEventStatus()
+    function changeEventStatusByDate()
     {
         // query to insert record
-        $queryToActive = "UPDATE events SET `status`='active' WHERE Date(date) = Date(Now())";
-        $queryToInactive = "UPDATE events SET `status`='inactive' WHERE Date(date) <> Date(Now())";
+        $queryToActive = "UPDATE 
+                            events 
+                          SET 
+                            `status`='active' 
+                          WHERE 
+                            Date(date) = Date(Now())";
+
+        $queryToInactive = "UPDATE 
+                                events 
+                            SET 
+                                `status`='inactive' 
+                            WHERE 
+                                 Date(date) <> Date(Now())";
         // prepare query
         $stmtToInactive = $this->conn->prepare($queryToInactive);
         $stmtToActive = $this->conn->prepare($queryToActive);
@@ -109,7 +161,10 @@ class Event
     function deleteEvent($eventId)
     {
         // query to insert record
-        $query = "DELETE FROM events WHERE id = :eventId";
+        $query = "DELETE FROM 
+                        events 
+                    WHERE 
+                        id = :eventId";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -120,11 +175,8 @@ class Event
         // delete image
         $event = $this->getEvent($eventId);
         unlink($event->image);
-        
 
         $stmt->execute();
-
-
 
         return true;
     }

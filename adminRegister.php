@@ -1,13 +1,17 @@
 <?php
-
 // include config file
 require_once("config/config.php");
 
+ // prepare user object
+ $admin = new Admin($db);
+ 
+// Check if admin is logged in
+if (($admin->isLoggedIn())) {
+    $admin->redirect('index.php');
+}
+
 // if clicked on login
 if (isset($_REQUEST['register'])) {
-
-    // prepare user object
-    $admin = new Admin($db);
 
     // set user property values
     $admin->name = $_POST['name'];
@@ -60,6 +64,7 @@ if (isset($_REQUEST['register'])) {
         <!-- register section start -->
         <div class="form-section">
             <h2 class="form-title">Admin Registration</h2>
+
             <div class="error">
                 <?php if (isset($_SESSION['error'])) { ?>
                     <p class="error-msg"><?= $_SESSION['error'] ?></p>
@@ -67,6 +72,7 @@ if (isset($_REQUEST['register'])) {
                 unset($_SESSION['error']);
                 ?>
             </div>
+
             <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="login-form">
                 <div class="input-group">
                     <label for="name">Name</label>
@@ -90,14 +96,11 @@ if (isset($_REQUEST['register'])) {
                 <div class="center">
                     <button class="btn btn-blue" type="submit" name="register">Registration</button>
                 </div>
-
-
             </form>
         </div>
         <!-- register section end -->
     </section>
     <!-- main section end -->
-
 
     <!-- footer section start -->
     <footer>

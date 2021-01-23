@@ -1,8 +1,6 @@
 <?php
-
 // include config file
 require_once("config/config.php");
-
 
 // if clicked on login
 if (isset($_REQUEST['login'])) {
@@ -58,7 +56,6 @@ if (isset($_REQUEST['login'])) {
     <!-- main section -->
     <section class="main-container">
         <!-- msg show -->
-
         <?php if (isset($_REQUEST['msg'])) { ?>
             <div class="popup popup-green">
                 <h2><?= $_REQUEST['msg'] ?></h2>
@@ -71,6 +68,7 @@ if (isset($_REQUEST['login'])) {
         <!-- login section start -->
         <div class="form-section">
             <h2 class="form-title">Admin Login</h2>
+
             <div class="error">
                 <?php if(isset($_SESSION['error'])){?>
                     <p class="error-msg"><?=$_SESSION['error']?></p>
@@ -78,6 +76,7 @@ if (isset($_REQUEST['login'])) {
                   unset($_SESSION['error']);
                 ?>
             </div>
+
             <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="login-form">
                 <div class="input-group">
                     <label for="email">Email</label>
@@ -109,7 +108,6 @@ if (isset($_REQUEST['login'])) {
         <p>Developed by <a href="mailto:ratulsikder104@gmail.com">Ratul Sikder</a></p>
     </footer>
     <!-- footer section end -->
-
 </body>
 
 </html>

@@ -17,7 +17,7 @@ class Admin
         $this->conn = $db;
     }
 
-    // signup user
+    // register admin
     function register()
     {
 
@@ -36,7 +36,6 @@ class Admin
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
 
-
         // bind values
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
@@ -45,18 +44,16 @@ class Admin
 
         // execute query
         if ($stmt->execute()) {
-            
             header('Location: adminLogin.php?msg=Registration Successful');
             return true;
         }else{
             $_SESSION['error'] = "Email is already used";
             
         }
-
-        
-        
+   
     }
-    // login user
+
+    // login admin
     function login()
     {
         // select all query
@@ -66,6 +63,7 @@ class Admin
                     admins
                 WHERE
                     email='" . $this->email . "' AND password='" . $this->password . "'";
+
         // prepare query statement
         $stmt = $this->conn->prepare($query);
         // execute query
@@ -88,7 +86,6 @@ class Admin
     // admin logout
     function logout()
     {
-      
         session_destroy();
         unset($_SESSION['id']);
         unset($_SESSION['name']);
@@ -99,7 +96,7 @@ class Admin
     }
 
     // Check if the user is already logged in
-    public function is_logged_in()
+    public function isLoggedIn()
     {
         // Check if user session has been set
         if (isset($_SESSION['name'])) {

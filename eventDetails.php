@@ -8,19 +8,24 @@ $admin = new Admin($db);
 $event = new Event($db);
 
 // Check if admin is not logged in
-if (!($admin->is_logged_in())) {
-    $admin->redirect('.php');
+if (!($admin->isLoggedIn())) {
+    $admin->redirect('adminLogin.php');
+
 }
 
+
+// change active status
+if(isset($_REQUEST['makeActive'])){
+    $event->changeActiveStatus($_REQUEST['eventId'],$_REQUEST['makeActive']);
+    $admin->redirect('index.php');
+}
 // fetch single event
 $singleEventInfo = $event->getEvent($_REQUEST['id']);
-
 
 // logout button 
 if (isset($_REQUEST['logout'])) {
     $admin->logout();
 }
-
 
 ?>
 
@@ -53,20 +58,16 @@ if (isset($_REQUEST['logout'])) {
         <nav>
             <ul>
                 <?php if (isset($_SESSION["name"])) { ?>
-                <li class="admin-name"><?= $_SESSION["name"] ?></li>
-                <li>
+                    <li class="admin-name"><?= $_SESSION["name"] ?></li>
+                    <li>
+                        <a href="index.php?logout=true" class="btn btn-red">Logout</a>
+                    </li>
 
-                    <a href="index.php?logout=true" class="btn btn-red">Logout</a>
-
-                </li>
                 <?php } else { ?>
-                <li><a href="adminLogin.php">Login</a></li>
-                <li><a href="adminRegister.php">Register</a></li>
+                    <li><a href="adminLogin.php">Login</a></li>
+                    <li><a href="adminRegister.php">Register</a></li>
                 <?php } ?>
-
             </ul>
-
-
         </nav>
     </header>
     <!-- header section end -->
@@ -76,29 +77,45 @@ if (isset($_REQUEST['logout'])) {
         <!-- Event  details section start -->
         <div class="event-details">
             <?php if ($singleEventInfo) { ?>
-            <img src="<?= $singleEventInfo->image ?>" class="event-image" alt=" <?= $singleEventInfo->title ?>">
-            <h2 class="event-title"><?= $singleEventInfo->title ?></h2>
-            <p class="event-text">Status: <span class="batch"><?= $singleEventInfo->status ?></span></p>
-            <p class="event-text"><i class="fa fa-calendar"
-                    aria-hidden="true"></i></i>&nbsp;&nbsp;<?= $singleEventInfo->date ?></p>
-            <p class="event-text"><i class="fa fa-map-marker"
-                    aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<?= $singleEventInfo->place ?></p>
-            <p class="event-text"><i class="fa fa-address-book"
-                    aria-hidden="true"></i>&nbsp;&nbsp;<?= $singleEventInfo->address ?></p>
-            <p class="event-text"><i class="fa fa-file-text"
-                    aria-hidden="true"></i>&nbsp;&nbsp;<?= $singleEventInfo->description ?></p>
+                <img src="<?= $singleEventInfo->image ?>" class="event-image" alt=" <?= $singleEventInfo->title ?>">
+                <h2 class="event-title">
+                    <?= $singleEventInfo->title ?>
+                </h2>
+                <p class="event-text">
+                    Status: <span class="batch"><?= $singleEventInfo->status ?></span>
+                </p>
 
+                <p class="event-text">
+                    <i class="fa fa-calendar" aria-hidden="true"></i></i>&nbsp;&nbsp;<?= $singleEventInfo->date ?>
+                </p>
+
+                <p class="event-text">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<?= $singleEventInfo->place ?>
+                </p>
+
+                <p class="event-text">
+                    <i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;&nbsp;<?= $singleEventInfo->address ?>
+                </p>
+
+                <p class="event-text">
+                    <i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;<?= $singleEventInfo->description ?>
+                </p>
 
             <?php } ?>
-
+            <!-- Back btn  -->
             <div class="center">
-                <a href="index.php" class="btn btn-blue" >Back</a>
+                <?php if ($singleEventInfo->status == 'inactive') { ?>
+                    <a href="eventDetails.php?eventId=<?= $singleEventInfo->id ?>&makeActive=true" class="btn btn-green">Active</a>
+                <?php } else { ?>
+                    <a href="eventDetails.php?eventId=<?= $singleEventInfo->id ?>&makeActive=false" class="btn btn-green">Inactive</a>
+                <?php } ?>
+
+                <a href="index.php" class="btn btn-blue">Back</a>
             </div>
         </div>
         <!-- Event  details section end -->
     </section>
     <!-- main section end -->
-
 
     <!-- footer section start -->
     <footer>

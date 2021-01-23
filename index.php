@@ -16,6 +16,16 @@ if (!($admin->is_logged_in())) {
 $eventObj = new Event($db);
 $allEvents = $eventObj->getAllEvent($_SESSION['id']);
 
+
+
+// change all today event to active another to inactive
+$eventObj->changeEventStatus();
+
+// delete event from event list
+if (isset($_REQUEST['delete']) && $_REQUEST['delete']) {
+    $eventObj->deleteEvent($_REQUEST['id']);
+}
+
 // logout button 
 if (isset($_REQUEST['logout'])) {
     $admin->logout();
@@ -97,49 +107,57 @@ if (isset($_REQUEST['logout'])) {
 
         <!-- list section start -->
         <div class="event-list">
-            <?php foreach ($allEvents as $singleEvent) { ?>
-                <?php if (($_REQUEST['status'] == 'true' || !isset($_REQUEST['status'])) && $singleEvent->status == true) { ?>
-                    <div class="list-card">
-                        <div class="card-img">
-                            <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
-                        </div>
-                        <div class="card-description">
-                            <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card-header">
-                                <h3><?= $singleEvent->title ?></h3>
-                            </a>
-                            <p class="list-card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <?= $singleEvent->place ?></p>
-                            <p class="list-card-text"><i class="fa fa-calendar" aria-hidden="true"></i>
-                                <?= $singleEvent->date ?></p>
-                        </div>
-                        <div class="card-status">
-                            <p class="list-card-text">Status: <?= $singleEvent->status ?>d</p>
-                            <a href="index.php?changeStatus=true">Change Status</a>
-                        </div>
-                    </div>
-                <?php } else if($singleEvent->status == false) { ?>
-                    <div class="list-card">
-                        <div class="card-img">
-                            <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
-                        </div>
-                        <div class="card-description">
-                            <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card-header">
-                                <h3><?= $singleEvent->title ?></h3>
-                            </a>
-                            <p class="list-card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <?= $singleEvent->place ?></p>
-                            <p class="list-card-text"><i class="fa fa-calendar" aria-hidden="true"></i>
-                                <?= $singleEvent->date ?></p>
-                        </div>
-                        <div class="card-status">
-                            <p class="list-card-text">Status: <?= $singleEvent->status ?>d</p>
-                            <a href="index.php?changeStatus=true">Change Status</a>
-                        </div>
-                    </div>
-                <?php } ?>
+            <!-- event empty -->
+            <?php if (empty($allEvents)) { ?>
+                <div class="list-card">
+                    Event list is empty;
+                </div>
             <?php } ?>
-        </div>
-        <!-- list section end -->
+
+            <?php foreach ($allEvents as $singleEvent) { ?>
+                <!-- activated events -->
+                <?php if ((!isset($_REQUEST['status']) || $_REQUEST['status'] == 'true') && $singleEvent->status == 'active') { ?>
+                    <div class="list-card">
+                        <div class="card-img">
+                            <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
+                        </div>
+                        <div class="card-description">
+                            <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card-header">
+                                <h3><?= $singleEvent->title ?></h3>
+                            </a>
+                            <p class="list-card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <?= $singleEvent->place ?></p>
+                            <p class="list-card-text"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                <?= $singleEvent->date ?></p>
+                        </div>
+                        <div class="card-status">
+                            <p class="list-card-text">Status: <?= $singleEvent->status ?>d</p>
+                            <a href="index.php?id=<?= $singleEvent->id ?>&delete=true">Delete</a>
+                        </div>
+                    </div>
+                    <!-- activated ends -->
+
+                    <!-- inactivated event -->
+                <?php } else if (isset($_REQUEST['status']) && $_REQUEST['status'] == 'false' && $singleEvent->status == 'inactive') { ?>
+                    <div class="list-card">
+                        <div class="card-img">
+                            <img src="<?= $singleEvent->image ?>" class="list-card-image" alt=" <?= $singleEvent->title ?>">
+                        </div>
+                        <div class="card-description">
+                            <a href="eventDetails.php?id=<?= $singleEvent->id ?>" class="list-card-header">
+                                <h3><?= $singleEvent->title ?></h3>
+                            </a>
+                            <p class="list-card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <?= $singleEvent->place ?></p>
+                            <p class="list-card-text"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                <?= $singleEvent->date ?></p>
+                        </div>
+                        <div class="card-status">
+                            <p class="list-card-text">Status: <?= $singleEvent->status ?>d</p>
+                            <a href="index.php?id=<?= $singleEvent->id ?>&delete=true">Delete</a </div> </div> <?php } ?> <!-- inactivated ends -->
+                        <?php } ?>
+                        </div>
+                        <!-- list section end -->
     </section>
     <!-- main section end -->
 

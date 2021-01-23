@@ -88,4 +88,35 @@ class Event
         $stmt->execute();
         return $stmt->fetch();
     }
+
+    // update event status
+    function changeEventStatus(){
+         // query to insert record
+        $queryToActive = "UPDATE events SET `status`='active' WHERE Date(date) = Date(Now())";
+        $queryToInactive = "UPDATE events SET `status`='inactive' WHERE Date(date) <> Date(Now())";
+        // prepare query
+        $stmtToInactive = $this->conn->prepare( $queryToInactive);
+        $stmtToActive = $this->conn->prepare($queryToActive);
+        $stmtToActive->execute();
+        $stmtToInactive->execute();
+
+       
+        return true;
+
+    }
+
+    // delete event
+    function deleteEvent($eventId){
+        // query to insert record
+        $query = "DELETE FROM events WHERE id = :eventId";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+      
+        // bind param
+        $stmt->bindParam(":eventId", $eventId);
+        $stmt->execute();
+        return true;
+    }
+    
 }

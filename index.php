@@ -189,7 +189,7 @@ if (isset($_REQUEST['logout'])) {
     <!-- footer section start -->
     <footer>
         <p>Developed by </p>
-        <a href="mailto:ratulsikder104@gmail.com">Ratul Sikder</a>
+        <a href="mailto:ratulsikder104@gmail.com"> Ratul Sikder</a>
     </footer>
     <!-- footer section end -->
 
